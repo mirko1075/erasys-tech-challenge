@@ -1,46 +1,119 @@
-# Getting Started with Create React App
+# Tech challenge Erases
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+## Tech stack
 
-### `yarn start`
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).	
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+"react": "^17.0.2",
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+"react-dom": "^17.0.2",
 
-### `yarn test`
+"react-scripts": "^4.0.3",
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+"typescript"': "^4.1.2"
 
-### `yarn build`
+### Challenges
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Problem: Requests blocked by C.O.R.S policy.
+Fix: Adding react router "http://localhost:3000" in proxy property in package.json
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Problem: At work I use React Native and  switching was not easy after a day on my main Project.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Choices:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+I used React proxy property in package.json to allow communication with local API avoiding CORS policy
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+I used bootstrap for card and grid
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+I used a lot of instil
 
-## Learn More
+### `Application `
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Application is made of a grid of users profiles.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+On each card the followinf informations are shown:
+
+Name
+
+Picture, 
+
+Distance,
+
+Status or status when user is offline
+
+Clicking on each card a Modal is shown, displaying the user complete information:
+
+​    "name"
+
+​    "online_status"
+
+​    "is_plus"
+
+​    "picture": {
+
+​        "comment"
+
+​        "url"
+
+​    },
+
+​    "last_login"
+
+​    "details": {
+
+​        "headline"
+
+​        "location": {
+
+​            "area"
+
+​            "city"
+
+​            "country"
+
+​            "distance"
+
+​            "name"
+
+​        },
+
+​        "personal": {
+
+​            "age"
+
+​            "body_hair"
+
+​            "body_type"
+
+​            "ethnicity"
+
+​            "eye_color"
+
+​            "height"
+
+​            "relationship"
+
+​            "smoker"
+
+​            "weight"
+
+​        },
+
+​        "sexual": {
+
+​            "anal_position"
+
+​            "safer_sex"
+
+​            "sm"
+
+​        },
+
+​        "is_plus"
+
+​    }
+

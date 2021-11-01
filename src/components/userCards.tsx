@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Card from "./card";
-import axios from "axios";
-import { computeDistance } from "../helpers/helpers";
-
+import UserCard from "./userCard";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import Filter from "./filter";
 interface simpleUser {
   id: number;
   is_plus: boolean;
@@ -19,13 +21,15 @@ interface picture {
 
 export default function UserCards(props: any) {
   const [usersArr, setUsersArr] = useState([]);
+  const [usersArrBase, setUsersArrBase] = useState([]);
+  const [openCard, setOpenCard] = useState(false);
+  const [userToShow, setUserToShow] = useState({});
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterFields, setFilterFields] = useState([]);
+
   const testURL = "";
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-    });
     getAllData();
   }, []);
 
@@ -70,20 +74,179 @@ export default function UserCards(props: any) {
   };
 
   const getAllData = async () => {
-    const users = await getUsers("DISTANCE");
-    console.log("users after fetch :>> ", users);
-
+    const result = await getUsers("DISTANCE");
+    const users = result.items;
     for (let i = 0; i < users.length; i++) {
       const details = await getSingleUser(users[i].id);
-      console.log("details :>> ", details);
-      users[i].details = details;
-      console.log("user :>> ", users[i]);
+      users[i].details = details[0];
     }
-
-    users.length && (await setUsersArr(users));
+    await setUsersArr(users);
+    await setUsersArrBase(users);
     console.log("usersArr :>> ", usersArr);
   };
+
+  const sortBy = async (parameter: string, order: string) => {
+    const tempArr = [...usersArr];
+    console.log("tempArr :>> ", tempArr);
+    parameter === "DIST"
+      ? order === "ASC"
+        ? tempArr.sort(
+            (a: any, b: any) =>
+              b.details.location.distance - a.details.location.distance
+          )
+        : tempArr.sort(
+            (a: any, b: any) =>
+              a.details.location.distance - b.details.location.distance
+          )
+      : order === "ASC"
+      ? tempArr.sort(
+          (a: any, b: any) =>
+            new Date(a.last_login).getTime() - new Date(b.last_login).getTime()
+        )
+      : tempArr.sort(
+          (a: any, b: any) =>
+            new Date(b.last_login).getTime() - new Date(a.last_login).getTime()
+        );
+    console.log("tempArr :>> ", tempArr);
+
+    await setUsersArr(tempArr);
+  };
+
+  const filterData = () => {
+    if (filterFields.length === 0) setUsersArr(usersArrBase);
+    console.log("filterFields :>> ", filterFields);
+    let filteredData: any = [];
+    filterFields.forEach((filter) => {
+      console.log(`filter`, filter);
+      const tempArr = usersArr.filter((user) => {
+        console.log("userFiltered", user["details"]);
+        if (filter[0] === "anal_position")
+          return user["details"]["sexual"][filter[0]] === filter[1];
+        if (filter[0] === "sm")
+          return user["details"]["sexual"][filter[0]] === filter[1];
+        if (filter[0] === "anal_position")
+          return user["details"]["sexual"][filter[0]] === filter[1];
+        if (filter[0] === "smoker")
+          return user["details"]["personal"][filter[0]] === filter[1];
+        if (filter[0] === "online_status") return user[filter[0]] === filter[1];
+      });
+      console.log(`tempArr`, tempArr);
+      filteredData = [...filteredData, ...tempArr];
+    });
+    console.log(`filteredData`, filteredData);
+    setUsersArr(filteredData);
+  };
+  const resetFilter = () => {
+    console.log(`usersArrBase`, usersArrBase);
+    setUsersArr(usersArrBase);
+  };
+  useEffect(() => {
+    if (!filterFields.length) {
+      resetFilter();
+      return;
+    }
+    filterData();
+  }, [filterFields]);
+
   return (
-    <>{usersArr && usersArr.map((user, i) => <Card key={i} user={user} />)}</>
+    <div
+      style={{
+        flex: 1,
+        flexDirection: "column",
+        alignContent: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#C4C4C4",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          height: "100px",
+          display: "flex",
+          flexDirection: "column",
+          alignContent: "center",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <div>
+            <a onClick={() => sortBy("DIST", "ASC")}>
+              Distance <ArrowDownwardIcon />
+            </a>
+          </div>
+          <div>
+            <a onClick={() => sortBy("DIST", "DESC")}>
+              Distance <ArrowUpwardIcon />
+            </a>
+          </div>
+          <div>
+            <a onClick={() => sortBy("ACT", "ASC")}>
+              Activity <ArrowUpwardIcon />
+            </a>
+          </div>
+          <div>
+            <a onClick={() => sortBy("ACT", "DESC")}>
+              Activity <ArrowDownwardIcon />
+            </a>
+          </div>
+          <div
+            style={{
+              padding: "10px",
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "center",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <a onClick={() => setShowFilter(!showFilter)}>
+              <FilterAltIcon />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+
+          justifyContent: "center",
+          flexWrap: "wrap",
+          width: "100%",
+          overflowY: "scroll",
+          height: "600px",
+        }}
+      >
+        {usersArr &&
+          usersArr.map((user, i) => (
+            <Card
+              key={i}
+              user={user}
+              setUserToShow={setUserToShow}
+              openCard={openCard}
+              setOpenCard={setOpenCard}
+              setShowFilter={setShowFilter}
+            />
+          ))}
+        {openCard ? (
+          <UserCard user={userToShow} setOpenCard={setOpenCard} />
+        ) : null}
+      </div>
+
+      {showFilter ? (
+        <Filter
+          filterFields={filterFields}
+          setFilterFields={setFilterFields}
+          setShowFilter={setShowFilter}
+        />
+      ) : null}
+    </div>
   );
 }

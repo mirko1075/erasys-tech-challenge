@@ -1,23 +1,23 @@
 .page {
-  background-color: "#C4C4C4";
+  background-color: #c4c4c4;
   padding: 0;
   margin: 0;
   border: 0;
 }
 .text {
-  font-family: "Roboto", sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 20px;
 }
 .textMedium {
-  font-family: "Roboto", sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 15px;
 }
 .tinyText {
-  font-family: "Roboto", sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 10px;
 }
 a {
-  font-family: "Roboto", sans-serif;
+  font-family: Roboto, sans-serif;
   font-size: 10px;
   text-decoration: none;
 }
@@ -26,13 +26,13 @@ a {
   font-weight: 500;
 }
 
-.cardcontainer: {
-  display: "flex";
-  aligncontent: "center";
-  alignitems: "center";
-  justifycontent: "space-between";
-  padding: "10px";
-  height: "50px";
+.cardcontainer {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  height: 50px;
 }
 
 .kmsdiv {
@@ -46,7 +46,7 @@ a {
 .usernamediv {
   height: 100%;
   width: 100%;
-  display: "flex";
+  display: flex;
   align-items: center;
   justify-content: flex-end;
   background-color: grey;

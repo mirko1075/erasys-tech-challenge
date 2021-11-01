@@ -29,7 +29,7 @@ I used React proxy property in package.json to allow communication with local AP
 
 I used bootstrap for card and grid
 
-I used a lot of instil
+I used a lot of inline styles, beacuse I'm used to that in react native now and it was easier for me.
 
 ### `Application `
 

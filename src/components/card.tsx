@@ -21,15 +21,7 @@ export default function Card({
   };
 
   return (
-    <div
-      className="card"
-      style={{
-        width: "40%",
-        height: "40%",
-        margin: "2px",
-      }}
-      onClick={() => openUserCard(user)}
-    >
+    <div className="card" onClick={() => openUserCard(user)}>
       <div className="cardContainer">
         <div
           style={{

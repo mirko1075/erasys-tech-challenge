@@ -20,10 +20,13 @@ export default function Filter({
     ...filterFields,
   ]);
   const handleFilterFields = async (e: any) => {
-    console.log("el :>> ", e.target.checked);
+    console.log("e.target.name.slice(-1) :>> ", e.target.checked);
 
     let tempArr = filterArr ? [...filterArr] : [];
-    if (e.target.name === "anal_position" || e.target.name === "online") {
+    if (
+      e.target.name.slice(0, -1) === "anal_position" ||
+      e.target.name === "online"
+    ) {
       if (
         e.target.checked &&
         !tempArr.find(
@@ -58,10 +61,14 @@ export default function Filter({
   };
 
   const checkIfFilterSelected = (field: any, value: any): boolean => {
-    console.log(`filterArr`, filterArr);
+    console.log("field,value :>> ", field, value);
     const idx = filterArr.findIndex((el) => {
       console.log("el :>> ", el);
-      return el[0] === field && el[1] === value;
+      if (field === "anal_position") {
+        return el[0].slice(0, -1) === field && el[1] === value;
+      } else {
+        return el[0] === field && el[1] === value;
+      }
     });
     return idx !== -1;
   };
@@ -97,7 +104,9 @@ export default function Filter({
           zIndex: 5,
         }}
       >
-        <div style={{ width: "100%", textAlign: "center" }}>Filter</div>
+        <div className="text" style={{ width: "100%", textAlign: "center" }}>
+          Filter
+        </div>
         <div
           style={{
             display: "flex",
@@ -105,8 +114,8 @@ export default function Filter({
             justifyContent: "space-around",
           }}
         >
-          <div>
-            <div className="textMedium">ONLINE</div>
+          {/*           <div>
+            <div className="textMedium">Online</div>
             <div
               style={{
                 display: "flex",
@@ -125,7 +134,7 @@ export default function Filter({
                 checked={checkIfFilterSelected("online_status", "ONLINE")}
               />
             </div>
-          </div>
+          </div> */}
           <div>
             <div className="textMedium">Role</div>
             {roles.map((role, i) => (
@@ -143,10 +152,10 @@ export default function Filter({
                   key={role}
                   onChange={(e) => handleFilterFields(e)}
                   type="checkbox"
-                  name="anal_position"
-                  id={role}
+                  name={"anal_position" + i}
+                  id={"anal_position" + i}
                   value={role}
-                  checked={checkIfFilterSelected("anal_position", { role })}
+                  checked={checkIfFilterSelected("anal_position", role)}
                 />
               </div>
             ))}
@@ -191,7 +200,7 @@ export default function Filter({
             </div>
           </div>
           <div>
-            <div className="textMedium">SMOKER</div>
+            <div className="textMedium">Smoker</div>
             <div
               style={{
                 display: "flex",

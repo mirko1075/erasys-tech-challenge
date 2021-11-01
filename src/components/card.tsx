@@ -1,11 +1,12 @@
 import React from "react";
 import PersonIcon from "@mui/icons-material/Person";
+import PlaceIcon from "@mui/icons-material/Place";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import {
   formatStatus,
   formatDate,
   capitalizeFirstChar,
 } from "../helpers/helpers";
-import { ReactComponent as King } from "../assets/king.svg";
 
 export default function Card({
   user,
@@ -21,7 +22,11 @@ export default function Card({
   };
 
   return (
-    <div className="card" onClick={() => openUserCard(user)}>
+    <div
+      className="card"
+      style={{ margin: "10px" }}
+      onClick={() => openUserCard(user)}
+    >
       <div className="cardContainer">
         <div
           style={{
@@ -53,9 +58,47 @@ export default function Card({
               alignContent: "center",
               alignItems: "center",
               justifyContent: "center",
+              margin: "5px",
             }}
           >
-            {user.details.location.distance} kms
+            <PlaceIcon />
+            {user.details.location.distance}km
+          </div>
+          <div
+            style={{
+              height: "100%",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "left-end",
+            }}
+          >
+            {user.is_plus ? (
+              <EmojiEmotionsIcon
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  backgroundColor: "red",
+                }}
+              />
+            ) : null}
+            <div
+              className="card-title tinyText "
+              style={{
+                height: "100%",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                alignContent: "center",
+                justifyContent: "left-end",
+                paddingTop: "5px",
+              }}
+            >
+              <span className="textMedium">
+                {capitalizeFirstChar(user.name)}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -69,32 +112,12 @@ export default function Card({
         </div>
       ) : (
         <div>
-          <PersonIcon style={{ width: "100%", height: "100%" }} />
+          <PersonIcon
+            className="card-img-top"
+            style={{ width: "100%", height: "100%" }}
+          />
         </div>
       )}
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "left-end",
-          backgroundColor: "grey",
-        }}
-      >
-        {user.is_plus ? (
-          <King
-            style={{
-              width: "24px",
-              height: "24px",
-              backgroundColor: "red",
-            }}
-          />
-        ) : null}
-        <h5 className="card-title tinyText ">
-          <span className="whiteBold">{capitalizeFirstChar(user.name)}</span>
-        </h5>
-      </div>
     </div>
   );
 }

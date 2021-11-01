@@ -116,35 +116,26 @@ export default function UserCards(props: any) {
     if (filterFields.length === 0) setUsersArr(usersArrBase);
     console.log("filterFields :>> ", filterFields);
     let filteredData: any = [];
-    filterFields.forEach((filter) => {
-      console.log(`filter`, filter);
+    filterFields.forEach((filter: string) => {
+      const field = filter[0];
+      const value = filter[1];
       const tempArr = usersArr.filter((user) => {
-        console.log("userFiltered", user["details"]);
-        if (filter[0] === "anal_position")
-          return user["details"]["sexual"][filter[0]] === filter[1];
-        if (filter[0] === "sm")
-          return user["details"]["sexual"][filter[0]] === filter[1];
-        if (filter[0] === "anal_position")
-          return user["details"]["sexual"][filter[0]] === filter[1];
-        if (filter[0] === "smoker")
-          return user["details"]["personal"][filter[0]] === filter[1];
-        if (filter[0] === "online_status") return user[filter[0]] === filter[1];
+        if (field.slice(0, -1) === "anal_position")
+          return user["details"]["sexual"][field.slice(0, -1)] === value;
+        if (field === "sm") return user["details"]["sexual"][field] === value;
+        if (field === "anal_position")
+          return user["details"]["sexual"][field] === value;
+        if (field === "smoker")
+          return user["details"]["personal"][field] === value;
+        if (field === "online_status") return user[field] === value;
       });
-      console.log(`tempArr`, tempArr);
       filteredData = [...filteredData, ...tempArr];
     });
-    console.log(`filteredData`, filteredData);
     setUsersArr(filteredData);
   };
-  const resetFilter = () => {
-    console.log(`usersArrBase`, usersArrBase);
-    setUsersArr(usersArrBase);
-  };
+
   useEffect(() => {
-    if (!filterFields.length) {
-      resetFilter();
-      return;
-    }
+    getAllData();
     filterData();
   }, [filterFields]);
 

@@ -34,6 +34,7 @@ export default function Card({
             display: "flex",
             alignContent: "center",
             alignItems: "center",
+            padding: "5px",
           }}
         >
           {user.online_status !== "OFFLINE" ? (
@@ -44,7 +45,10 @@ export default function Card({
               {formatStatus(user.online_status)}
             </div>
           ) : (
-            <div className="tinyText">
+            <div
+              className="tinyText"
+              style={{ width: "70px", textAlign: "center" }}
+            >
               {formatDate(user.last_login)}{" "}
               {formatDate(user.last_login) === 1 ? "day" : "days"} ago
             </div>

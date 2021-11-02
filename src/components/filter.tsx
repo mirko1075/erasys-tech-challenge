@@ -88,7 +88,7 @@ export default function Filter({
         zIndex: 2,
         border: "1px solid blue",
         display: "flex",
-        alignItems: "flex-end",
+        alignItems: "center",
         justifyContent: "center",
       }}
     >
@@ -99,9 +99,11 @@ export default function Filter({
           flexDirection: "column",
           justifyContent: "space-between",
           height: "30%",
-          width: "70%",
+          width: "400px",
           backgroundColor: "grey",
           zIndex: 5,
+          borderRadius: "10px",
+          padding: "10px",
         }}
       >
         <div className="text" style={{ width: "100%", textAlign: "center" }}>

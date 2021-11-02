@@ -116,27 +116,6 @@ export default function Filter({
             justifyContent: "space-around",
           }}
         >
-          {/*           <div>
-            <div className="textMedium">Online</div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                width: "30px",
-                fontSize: "16px",
-              }}
-            >
-              <div className="tinyText">YES</div>
-              <input
-                onChange={(e) => handleFilterFields(e)}
-                type="checkbox"
-                name="online_status"
-                id="online"
-                value={"ONLINE"}
-                checked={checkIfFilterSelected("online_status", "ONLINE")}
-              />
-            </div>
-          </div> */}
           <div>
             <div className="textMedium">Role</div>
             {roles.map((role, i) => (
